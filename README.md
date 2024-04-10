@@ -1,13 +1,3 @@
 # POC WebSocket x Python
 
-Proof of concept of a Node.js server executing python file and returning it's result to client through Websocket
-
-## Installation
-
-To up Node.js and Nginx server just use Docker compose :
-
-```bash
-docker compose up
-```
-
-It should pop the Node.js server at localhost:3000 and the Nginx server at localhost:80
+This repository is a Proof of Concept for executing Python scripts on a Node.js server and sending back the result of the script execution to the client through WebSockets. It's intended to allow the use of Python ML models for "real-time" web usages in the most performant way possible. The server implementation is available under the [server](./server) folder and the client implementation under the [client](./client) folder.

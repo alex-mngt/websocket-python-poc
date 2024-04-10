@@ -20,7 +20,6 @@ FROM nginx:alpine
 
 # Copy built app to nginx server root
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
-COPY --from=build /usr/src/app/static /usr/share/nginx/html
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]

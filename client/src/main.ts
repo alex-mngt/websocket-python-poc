@@ -7,6 +7,5 @@ socket.onopen = () => {
 
 socket.onmessage = (message) => {
   // here we got something sent from the server
-
   console.log(message);
 };
