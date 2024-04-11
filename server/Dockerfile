@@ -13,14 +13,8 @@ RUN pnpm install
 # Build app
 RUN pnpm build
 
-# Copy built app to nginx server root
-RUN cp test.py dist/test.py
-
-# Install Python
+# Install Python & Pip
 RUN apt update && apt install -y python3 python3-pip
 
-# Enable pnpm
-RUN corepack enable pnpm
-
 # Start Node server 
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/main.js"]

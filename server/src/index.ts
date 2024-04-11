@@ -1,6 +1,6 @@
 import { spawn } from "child_process";
 
-const uWS = require("uWebSockets.js");
+import uWS from "uWebSockets.js";
 
 const port = 3000;
 
@@ -16,17 +16,21 @@ const app = uWS
       console.log("A WebSocket connected!");
     },
     message: (ws, message, isBinary) => {
-      /* Ok is false if backpressure was built up, wait for drain */
+      const process = spawn("python3", ["scripts/test.py"], {
+        cwd: __dirname,
+      });
 
-      const process = spawn("python3", ["test.py"]);
       process.stdout.on("data", (data) => {
         console.log(`stdout: ${data}`);
       });
+
       process.stderr.on("data", (data) => {
         console.error(`stderr: ${data}`);
       });
+
       process.on("close", (code) => {
         console.log(`child process exited with code ${code}`);
+
         if (code === 0) {
           ws.send("glasses");
         } else {

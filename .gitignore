@@ -1,18 +1,29 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-node_modules
+# Logs
+logs
+*.log
+pnpm-debug.log*
 
-# misc
+node_modules
+dist
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 *.pem
 
+
 # local env files
-.env*.local
 .env
 
 # typescript
 *.tsbuildinfo
-
-# VS Code
-/.vscode
