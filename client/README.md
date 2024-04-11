@@ -1,6 +1,6 @@
 # POC WebSocket x Python (Client)
 
-This folder represents the client part of this POC. It uses [Vite](https://vitejs.dev) to support `.ts` files import and enable HMR in development. It relies on the native JS [WebSocket API](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).
+This folder represents the client part of this POC. It uses [Vite](https://vitejs.dev) to support Typescript and enable HMR in development. It relies on the native JS [WebSocket API](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).
 
 ## Prerequisites
 
@@ -88,7 +88,7 @@ pnpm preview
 
 ## Docker
 
-To ease the use of this project on any OS, it also includes a Dockerfile that containerizes this client and serve it through Nginx. You can setup all the infrastructure using Docker compose on the [root](../) of this repository :
+To make this project easily usable on any operating system, it includes a Dockerfile that containerizes the client and serve it through [Nginx](https://nginx.org/en). You can also setup all the infrastructure using Docker compose on the [root](../) of this repository :
 
 ```bash
 docker compose up

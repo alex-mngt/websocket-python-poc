@@ -17,7 +17,7 @@ const app = uWS
     },
     message: (ws, message, isBinary) => {
       const process = spawn("python3", ["scripts/test.py"], {
-        cwd: __dirname,
+        cwd: import.meta.dirname,
       });
 
       process.stdout.on("data", (data) => {

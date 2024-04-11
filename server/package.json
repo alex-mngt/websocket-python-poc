@@ -1,10 +1,14 @@
 {
+  "type": "module",
   "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": " rspack build --watch & node --watch dist/main.js",
+    "dev": "pnpm build-dev && concurrently \"pnpm:watch-*\"",
+    "watch-swc": "swc src -d .dev -w --copy-files --strip-leading-paths",
+    "watch-node": "node --watch --trace-warnings ./.dev/index.js",
+    "build-dev": "swc src -d .dev --copy-files --strip-leading-paths",
     "build": "rspack build"
   },
   "keywords": [],
@@ -14,10 +18,15 @@
     "@rspack/binding-linux-x64-gnu": "0.6.1",
     "@rspack/cli": "0.6.1",
     "@rspack/core": "0.6.1",
+    "@swc/cli": "^0.3.12",
+    "@swc/core": "^1.4.13",
     "@types/node": "^20.12.7",
+    "chokidar": "^3.6.0",
+    "concurrently": "^8.2.2",
     "typescript": "^5.4.4"
   },
   "dependencies": {
     "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.43.0"
-  }
+  },
+  "packageManager": "pnpm@8.15.6+sha256.01c01eeb990e379b31ef19c03e9d06a14afa5250b82e81303f88721c99ff2e6f"
 }
