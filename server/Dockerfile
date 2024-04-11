@@ -17,4 +17,4 @@ RUN pnpm build
 RUN apt update && apt install -y python3 python3-pip
 
 # Start Node server 
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/index.js"]
