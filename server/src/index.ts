@@ -5,6 +5,10 @@ import uWS from 'uWebSockets.js';
 
 const port = 3000;
 
+// spawn('bash', ['-c', `source scripts/venv/bin/activate`], {
+//   cwd: import.meta.dirname,
+// });
+
 const app = uWS
   .App()
   .ws('/*', {
@@ -29,7 +33,7 @@ const app = uWS
         'bash',
         [
           '-c',
-          'source scripts/venv/bin/activate && python3 scripts/detector.py ../.temp/no_glasses.png',
+          `source scripts/venv/bin/activate && python3 scripts/detector.py ${tempFolder}/screenshot.webp`,
         ],
         {
           cwd: import.meta.dirname,
