@@ -32,9 +32,9 @@ const app = uWS
         console.log(`child process exited with code ${code}`);
 
         if (code === 0) {
-          ws.send("glasses");
+          const res = ws.send("glasses");
         } else {
-          ws.send("no glasses");
+          const res = ws.send("no glasses");
         }
       });
     },

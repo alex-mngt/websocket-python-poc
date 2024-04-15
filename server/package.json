@@ -16,7 +16,7 @@
   "license": "ISC",
   "devDependencies": {
     "@swc/cli": "^0.3.12",
-    "@swc/core": "^1.4.13",
+    "@swc/core": "^1.4.14",
     "@types/node": "^20.12.7",
     "chokidar": "^3.6.0",
     "concurrently": "^8.2.2",
