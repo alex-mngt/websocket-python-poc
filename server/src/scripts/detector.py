@@ -3,7 +3,7 @@ from glasses_detector import GlassesClassifier
 
 classifier = GlassesClassifier(kind="anyglasses", device=None)
 
-async def main(path):
+def main(path):
     print(f"Starting to detect glasses from {path}")
     predictions = classifier.process_file(path)
 
@@ -20,6 +20,5 @@ if __name__ == '__main__':
         sys.exit(1)
     
     image_path = sys.argv[1]
-    import asyncio
-    result = asyncio.run(main(image_path))
+    result = main(image_path)
     sys.exit(result)
