@@ -1,4 +1,5 @@
 import { spawn } from "child_process";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
 
 import uWS from "uWebSockets.js";
 
@@ -16,6 +17,14 @@ const app = uWS
       console.log("A WebSocket connected!");
     },
     message: (ws, message, isBinary) => {
+      const tempFolder = `${import.meta.dirname}/.temp`;
+
+      if (!existsSync(tempFolder)) {
+        mkdirSync(tempFolder);
+      }
+
+      writeFileSync(`${tempFolder}/screenshot.webp`, Buffer.from(message));
+
       const process = spawn("python3", ["scripts/test.py"], {
         cwd: import.meta.dirname,
       });
