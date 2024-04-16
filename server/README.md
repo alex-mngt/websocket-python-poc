@@ -36,9 +36,9 @@ corepack install
 
 Consistency in TypeScript versions is crucial. For VSCode users, ensure that you [use the workspace version of TypeScript](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-the-workspace-version-of-typescript) and not the built-in version provided by VSCode.
 
-### Pyhton
+### Python
 
-`pyhton3` & `pip` are required to properly execute Python scripts of this project. On MacOS or Linux, you can install them using [homebrew](https://brew.sh) :
+`python3` & `pip` are required to properly execute Python scripts of this project. On MacOS or Linux, you can install them using [homebrew](https://brew.sh) :
 
 ```bash
 brew install python pip
