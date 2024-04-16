@@ -6,10 +6,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm build-dev && concurrently \"pnpm:watch-*\"",
-    "watch-swc": "swc src -d .dev -w --copy-files --strip-leading-paths",
+    "watch-swc": "swc src -d .dev -w --copy-files --include-dotfiles --strip-leading-paths",
     "watch-node": "node --watch --trace-warnings ./.dev/index.js",
-    "build-dev": "swc src -d .dev --copy-files --strip-leading-paths",
-    "build": "swc src -d dist --copy-files --strip-leading-paths"
+    "build-dev": "swc src -d .dev --copy-files --include-dotfiles --strip-leading-paths",
+    "build": "swc src -d dist --copy-files --include-dotfiles --strip-leading-paths"
   },
   "keywords": [],
   "author": "",

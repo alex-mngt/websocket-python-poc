@@ -41,7 +41,33 @@ Consistency in TypeScript versions is crucial. For VSCode users, ensure that you
 `pyhton3` & `pip` are required to properly execute Python scripts of this project. On MacOS or Linux, you can install them using [homebrew](https://brew.sh) :
 
 ```bash
-brew install python
+brew install python pip
+```
+
+Then you need to create your Python virtual environment :
+
+```bash
+python3 -m venv ./src/python/.venv
+```
+
+Activate it :
+
+```bash
+source ./src/python/.venv/bin/activate
+```
+
+Finally, install the required dependencies :
+
+```bash
+pip3 install -U -r ./src/python/requirements.txt
+```
+
+You can verify that the ML model is working by executing it on the test data provided :
+
+```bash
+python3 src/python/detector.py src/python/test-data/glasses.jpg
+
+python3 src/python/detector.py src/python/test-data/no-glasses.webp
 ```
 
 ## Getting Started

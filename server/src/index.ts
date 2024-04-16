@@ -1,24 +1,22 @@
-import { spawn } from 'child_process';
-import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import { spawn } from "child_process";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
 
-import uWS from 'uWebSockets.js';
+import uWS from "uWebSockets.js";
 
 const port = 3000;
-
-// spawn('bash', ['-c', `source scripts/venv/bin/activate`], {
-//   cwd: import.meta.dirname,
-// });
+let pythonProcess = null;
+let lastResponse: "glasses" | "no glasses";
 
 const app = uWS
   .App()
-  .ws('/*', {
+  .ws("/*", {
     /* Options */
     compression: uWS.SHARED_COMPRESSOR,
     maxPayloadLength: 16 * 1024 * 1024,
     idleTimeout: 10,
     /* Handlers */
     open: (ws) => {
-      console.log('A WebSocket connected!');
+      console.log("A WebSocket connected!");
     },
     message: (ws, message, isBinary) => {
       const tempFolder = `${import.meta.dirname}/.temp`;
@@ -27,51 +25,56 @@ const app = uWS
         mkdirSync(tempFolder);
       }
 
-      writeFileSync(`${tempFolder}/screenshot.webp`, Buffer.from(message));
+      const tempFilePath = `${tempFolder}/screenshot.webp`;
 
-      const process = spawn(
-        'bash',
-        [
-          '-c',
-          `source scripts/venv/bin/activate && python3 scripts/detector.py ${tempFolder}/screenshot.webp`,
-        ],
-        {
-          cwd: import.meta.dirname,
-        }
-      );
+      writeFileSync(tempFilePath, Buffer.from(message));
 
-      process.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
-      });
+      const pythonInterpreter = `${
+        import.meta.dirname
+      }/python/.venv/bin/python`;
 
-      process.stderr.on('data', (data) => {
-        console.error(`stderr: ${data}`);
-      });
+      if (pythonProcess === null) {
+        pythonProcess = spawn(
+          pythonInterpreter,
+          [`python/detector.py`, tempFilePath],
+          {
+            cwd: import.meta.dirname,
+          }
+        );
 
-      process.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
+        pythonProcess.stdout.on("data", (data) => {
+          console.log(`stdout: ${data}`);
+        });
 
-        if (code === 0) {
-          const res = ws.send('glasses');
-        } else {
-          const res = ws.send('no glasses');
-        }
-      });
+        pythonProcess.stderr.on("data", (data) => {
+          console.error(`stderr: ${data}`);
+        });
+
+        pythonProcess.on("close", (code: number) => {
+          console.log(`child process exited with code ${code}`);
+
+          pythonProcess = null;
+          lastResponse = code === 1 ? "glasses" : "no glasses";
+          ws.send(lastResponse);
+        });
+      } else {
+        ws.send(lastResponse);
+      }
     },
     drain: (ws) => {
-      console.log('WebSocket backpressure: ' + ws.getBufferedAmount());
+      console.log("WebSocket backpressure: " + ws.getBufferedAmount());
     },
     close: (ws, code, message) => {
-      console.log('WebSocket closed');
+      console.log("WebSocket closed");
     },
   })
-  .any('/*', (res, req) => {
-    res.end('Nothing to see here!');
+  .any("/*", (res, req) => {
+    res.end("Nothing to see here!");
   })
   .listen(port, (token) => {
     if (token) {
-      console.log('Listening to port ' + port);
+      console.log("Listening to port " + port);
     } else {
-      console.log('Failed to listen to port ' + port);
+      console.log("Failed to listen to port " + port);
     }
   });
